@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warta Zdrowie – Trener AI</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f8;
+}
+
+header {
+    background: #002f6c;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+nav {
+    display: flex;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+nav button {
+    flex: 1;
+    padding: 16px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+nav button:hover {
+    background: #f0f2f5;
+}
+
+.active-tab {
+    border-bottom: 3px solid #e30613;
+    color: #e30613;
+}
+
+.section {
+    display: none;
+    padding: 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.password-box {
+    max-width: 400px;
+    margin: 80px auto;
+    text-align: center;
+}
+
+input[type="password"], input[type="text"] {
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button.primary {
+    background: #e30613;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button.primary:hover {
+    background: #c70510;
+}
+
+.widget-container {
+    margin-top: 40px;
+}
+
+.admin-box {
+    max-width: 500px;
+    margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Warta Zdrowie – Trener AI</h1>
+</header>
+
+<nav>
+    <button onclick="openTraining()" id="tab-training">Trening i zaliczenie</button>
+    <button onclick="openAdmin()" id="tab-admin">Zarządzaj</button>
+</nav>
+
+<!-- TRENING -->
+
+<div id="training-login" class="password-box">
+    <h2>Dostęp do Treningu</h2>
+    <input type="password" id="trainingPassword" placeholder="Podaj hasło">
+    <button class="primary" onclick="checkTrainingPassword()">Wejdź</button>
+</div>
+
+<div id="training-content" class="section">
+    <h2>Przewagi Konkurencyjne</h2>
+
+    <div class="widget-container">
+        <elevenlabs-convai agent-id="agent_0901kj0zjdcxer2t3ma2jtccpft2"></elevenlabs-convai>
+        <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+    </div>
+</div>
+
+<!-- ADMIN -->
+
+<div id="admin-login" class="password-box">
+    <h2>Dostęp Administracyjny</h2>
+    <input type="password" id="adminPassword" placeholder="Podaj hasło administratora">
+    <button class="primary" onclick="checkAdminPassword()">Wejdź</button>
+</div>
+
+<div id="admin-content" class="section">
+    <h2>Zarządzanie</h2>
+
+    <div class="admin-box">
+        <h3>Zmień hasło do zakładki "Trening i zaliczenie"</h3>
+        <input type="text" id="newTrainingPassword" placeholder="Nowe hasło">
+        <button class="primary" onclick="changeTrainingPassword()">Zmień hasło</button>
+    </div>
+</div>
+
+<script>
+let trainingPassword = "Warta2026";
+let adminPassword = "Tomek123";
+
+function openTraining() {
+    resetViews();
+    document.getElementById("tab-training").classList.add("active-tab");
+    document.getElementById("training-login").style.display = "block";
+}
+
+function openAdmin() {
+    resetViews();
+    document.getElementById("tab-admin").classList.add("active-tab");
+    document.getElementById("admin-login").style.display = "block";
+}
+
+function resetViews() {
+    document.querySelectorAll(".section").forEach(s => s.style.display = "none");
+    document.querySelectorAll(".password-box").forEach(s => s.style.display = "none");
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active-tab"));
+}
+
+function checkTrainingPassword() {
+    if (document.getElementById("trainingPassword").value === trainingPassword) {
+        document.getElementById("training-login").style.display = "none";
+        document.getElementById("training-content").style.display = "block";
+    } else {
+        alert("Nieprawidłowe hasło.");
+    }
+}
+
+function checkAdminPassword() {
+    if (document.getElementById("adminPassword").value === adminPassword) {
+        document.getElementById("admin-login").style.display = "none";
+        document.getElementById("admin-content").style.display = "block";
+    } else {
+        alert("Nieprawidłowe hasło administratora.");
+    }
+}
+
+function changeTrainingPassword() {
+    const newPass = document.getElementById("newTrainingPassword").value;
+    if (newPass.length < 4) {
+        alert("Hasło musi mieć min. 4 znaki.");
+        return;
+    }
+    trainingPassword = newPass;
+    alert("Hasło zostało zmienione.");
+}
+</script>
+
+</body>
+</html>
